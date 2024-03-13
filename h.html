@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Three.js Animation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0px;
+        background-color: black;
+        color: aliceblue;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      canvas {
+        display: block;
+      }
+      #animation-container {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div style="background-color: aliceblue" id="animation-container"></div>
+      <p
+        style="text-align: center; padding: 0 100px; text-transform: uppercase"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque animi
+        quidem, modi doloribus commodi, ea tenetur et sit, magnam hic rem
+        voluptatem fuga sunt repellendus nesciunt aperiam consequuntur deserunt
+        unde.
+      </p>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // Set up scene, camera, renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        15,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      const container = document.getElementById("animation-container");
+      container.appendChild(renderer.domElement);
+      // const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+      // const geometry = new THREE.IcosahedronGeometry(1,1,1);
+      // const geometry = new THREE.SphereGeometry(1,1,1);
+      //         const geometry = new THREE.ConeGeometry( 2, 2 ,15);
+
+      // const material = new THREE.LineBasicMaterial({color: 0xffff00});
+      const light = new THREE.AmbientLight(0xfffff, 0.8); // soft white light
+      scene.add(light);
+
+      const Pointlight = new THREE.PointLight(0xfffff, 12, 70); // soft white light
+      Pointlight.position.set(4, 2, 4);
+      scene.add(Pointlight);
+      // const geometry = new THREE.SphereGeometry( 3, 40, 50 );
+      // const geometry = new THREE.TorusKnotGeometry( 1, 1, 40, 16 );
+      const geometry = new THREE.SphereGeometry(1, 29, 55);
+
+      // const geometry = new THREE.ConeGeometry( 1, 1.5, 7,10,23 );
+      const material = new THREE.MeshLambertMaterial({ color: "green" });
+      const cube = new THREE.Line(geometry, material);
+      scene.add(cube);
+      // cube.rotation.x += 3.5;
+
+      // Position the camera
+      camera.position.z = 8;
+      // let flag=true;
+      // Define animation function
+      function animate() {
+        requestAnimationFrame(animate);
+        // if (cube.rotation.x>5) {
+        //     flag=false
+        // } if (cube.rotation.x<15) {
+        //     flag=true
+        // }
+        // // Rotate the cube
+        // if (flag) {
+          // controls.update(); // Update controls
+
+        cube.rotation.x += 0.03;
+        // cube.rotation.x=4*Math.sin(10*4)
+        cube.rotation.y += 0.02;
+        cube.rotation.z += 0.01;
+
+        renderer.render(scene, camera);
+      }
+
+      // Start the animation loop
+      animate();
+    </script>
+  </body>
+</html>
